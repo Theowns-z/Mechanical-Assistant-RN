@@ -12,13 +12,17 @@ import FormNuevoVehiculo from './Components/ConductorComponent/FormNuevoVehiculo
 
 import { Router } from './routes/Router';
 import { MechanicalContext, MechanicalContextProvider } from './context/MechanicalContext';
+import HomeConductor from './Components/ConductorComponent/HomeConductor';
 
 
 export default function App() {
   return (
-    <MechanicalContextProvider>
-      <Router></Router>
-    </MechanicalContextProvider>
+    // <MechanicalContextProvider>
+    //   <Router></Router>
+    // </MechanicalContextProvider>
+
+    <HomeConductor></HomeConductor>
+
   );
 }
 
