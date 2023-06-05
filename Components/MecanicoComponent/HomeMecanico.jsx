@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
-import { ScrollView } from 'react-native';
-import Svg, { Path } from "react-native-svg"
 import StyledText from '../Styles/StyledText';
 
-import Mecanicoss from '../Data/Mecanicoss.js';
+import Solicitudes from '../Data/Solicitudes.js';
+import SvgComponentMecanicIcon from '../SvgComponents/SvgComponentMecanicIcon';
+import ProfileMecanico from './ProfileMecanico';
 
 
 const HomeMecanico = () => {
@@ -14,32 +14,55 @@ const HomeMecanico = () => {
 
     <View style={styles.container}>
 
-      <StyledText subtitle>
-        Mecanicos
-      </StyledText>
-
-
-      <FlatList
-        style={styles.contenedorMecanicos}
-        data={Mecanicoss}
-        keyExtractor={meca => meca.id}
-        renderItem={({ item }) => (
-          <View style={styles.Boxmecanicos}>
-            <StyledText textInfo >Nombre: {item.nombre} {item.apellido} </StyledText>
-            <StyledText textInfo >Especialidad en: {item.especialidad}</StyledText>
-            <StyledText textInfo >Calificacion: {item.calificacion}</StyledText>
-            <View style={styles.containerbottom}>
-              <TouchableOpacity style={styles.bottom}>
-                <Text style={{ color: '#276E90', fontSize: 16, textAlign: 'right', margin: 10 }}>Contactar</Text>
-              </TouchableOpacity>
-            </View>
+      <View style={styles.container}>
+        <View style={styles.ContedorNav}>
+          <View style={styles.imageMecanic}>
+            <SvgComponentMecanicIcon style={{ width: '100%', height: '100%' }} />
           </View>
 
-        )}
+          <View style={styles.ProfileMecanico}>
+            <ProfileMecanico />
+          </View>
+        </View>
+        <Text style={{ paddingTop: 0, textAlign: 'center', color: '#276E90', fontSize: 20, fontWeight: 'bold' }}>
+          Solicitudes
+        </Text>
 
-      />
 
+        <FlatList
+          style={styles.contenedorMecanicos}
+          data={Solicitudes}
+          keyExtractor={soli => soli.id}
+          renderItem={({ item }) => (
+            <View style={styles.Boxmecanicos}>
+              <StyledText textInfo >Nombre: {item.nombre_modelo} {item.apellido} </StyledText>
+              <StyledText textInfo >Marca: {item.marca}</StyledText>
+              <StyledText textInfo >Modelo: {item.modelo}</StyledText>
+              <StyledText textInfo >Placa: {item.placa}</StyledText>
+              <StyledText textInfo >Descripcion: {item.descripcion}</StyledText>
+
+              <View style={styles.containerbottom}>
+                <TouchableOpacity style={styles.bottom}>
+                  <Text style={{ color: '#276E90', fontSize: 16, textAlign: 'right', margin: 10 }}>Aceptar</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.bottom2}>
+                  <Text style={{ color: '#276E90', fontSize: 16, textAlign: 'right', margin: 10 }}>Rechazar</Text>
+                </TouchableOpacity>
+              </View>
+
+            </View>
+
+          )}
+
+        />
+
+
+        <View style={styles.line} />
+        <IcomComponents />
+      </View>
     </View>
+
 
   )
 
@@ -51,8 +74,41 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#EFEFEF',
+    height: '100%',
 
 
+  },
+
+
+  ContedorNav: {
+    flexDirection: 'row',
+    height: '22%',
+    width: '100%',
+
+  },
+
+  ProfileMecanico: {
+
+    width: '50%',
+    height: '100%',
+
+
+  },
+
+  imageMecanic: {
+
+    padding: 20,
+    paddingTop: 20,
+    width: '50%',
+    height: '100%',
+    justifyContent: 'center',
+  },
+
+  line: {
+    width: '100%',
+    height: 1,
+    backgroundColor: '#F2AA1F',
+    marginVertical: 10,
   },
 
   Contedorimag: {
@@ -68,8 +124,19 @@ const styles = StyleSheet.create({
 
   containerbottom: {
 
-    alignSelf: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
     padding: 10,
+
+  },
+
+  containerbottom2: {
+
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '100%',
+    padding: 15,
+
 
   },
 
@@ -80,6 +147,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#276E90',
 
+  },
+
+  bottom2: {
+
+    borderRadius: 20,
+    backgroundColor: '#F2AA1F',
+    borderWidth: 1,
+    borderColor: '#276E90',
 
   },
 
@@ -89,7 +164,7 @@ const styles = StyleSheet.create({
 
     borderColor: '#276E90',
     borderWidth: 2,
-    height: '60%',
+    height: '40%',
     margin: 20,
   },
 

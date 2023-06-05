@@ -9,16 +9,25 @@ import Servicios from './Components/ConductorComponent/Servicios';
 import DescriptionService from './Components/ConductorComponent/DescriptionService';
 import FormConductor2 from './Components/ConductorComponent/FormConductor2';
 import FormNuevoVehiculo from './Components/ConductorComponent/FormNuevoVehiculo';
+
+
 import { Router } from './routes/Router';
 import { MechanicalContext, MechanicalContextProvider } from './context/MechanicalContext';
+<<<<<<< HEAD
 
+=======
+import HomeConductor from './Components/ConductorComponent/HomeConductor';
+>>>>>>> f439d01d23a088998ac3137031e51e022a37a759
 
 
 export default function App() {
   return (
-    <MechanicalContextProvider>
-      <Router></Router>
-    </MechanicalContextProvider>
+    // <MechanicalContextProvider>
+    //   <Router></Router>
+    // </MechanicalContextProvider>
+
+    <HomeConductor></HomeConductor>
+
   );
 }
 

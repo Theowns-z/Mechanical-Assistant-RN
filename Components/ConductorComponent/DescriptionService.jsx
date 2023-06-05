@@ -1,12 +1,36 @@
 import React from 'react';
 import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
-import StyledText from '../Styles/StyledText';
-import Vehiculos from '../Data/Vehiculos.js';
 import IcomComponents from '../IcomComponents';
 
 
 
 const DescriptionService = () => {
+
+    const [descripcion, setDescripcion] = useState("");
+
+    function formSolicitud(descripcion) {
+
+        fetch('https://mechanical-assistant-sb-production.up.railway.app/api/vehiculo/conductor/{id}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                modeo: nombreModel,
+                placa: placa,
+
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+
+    }
 
     return (
         <View style={styles.container}>
@@ -14,10 +38,10 @@ const DescriptionService = () => {
             <View style={styles.contenedorForm}>
                 <Text style={{ textAlign: 'center', color: '#276E90', margin: 35, fontSize: 25, fontWeight: 'bold' }}>Nueva solicitud</Text>
                 <Text style={styles.subtitulo2}>Descripcion</Text>
-                <TextInput multiline={true}
+                <TextInput onChangeText={(text) => setDescripcion(text)} multiline={true}
                     textAlignVertical="top" style={styles.TextInput} placeholder="Describe tu solicitud"></TextInput>
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity onPress={() => formSolicitud(descripcion)} style={styles.button}>
                     <Text style={{ textAlign: 'center', color: '#276E90' }}>Realizar solicitud</Text>
                 </TouchableOpacity>
 
