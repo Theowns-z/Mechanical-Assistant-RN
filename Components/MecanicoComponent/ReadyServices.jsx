@@ -8,7 +8,7 @@ import SvgComponentMecanicIcon from '../SvgComponents/SvgComponentMecanicIcon';
 import ProfileMecanico from './ProfileMecanico';
 
 
-const HomeMecanico = () => {
+const ReadyServices = () => {
 
 
     return(
@@ -24,7 +24,7 @@ const HomeMecanico = () => {
           </View> 
           </View>
           <Text style = {{paddingTop: 0, textAlign: 'center', color: '#276E90', fontSize: 20, fontWeight: 'bold' }}>
-            Solicitudes
+            Solicitudes aceptadas
           </Text>
          
           
@@ -42,11 +42,11 @@ const HomeMecanico = () => {
 
                 <View style = {styles.containerbottom}>
                 <TouchableOpacity style = {styles.bottom}>
-                  <Text style = {{color: '#276E90', fontSize: 16,  textAlign: 'right', margin: 10}}>Aceptar</Text>
+                  <Text style = {{color: '#276E90', fontSize: 16,  textAlign: 'right', margin: 10}}>Eliminar</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style = {styles.bottom2}>
-                  <Text style = {{color: '#276E90', fontSize: 16,  textAlign: 'right', margin: 10}}>Rechazar</Text>
+                  <Text style = {{color: '#276E90', fontSize: 16,  textAlign: 'right', margin: 10}}>Servicio realizado</Text>
                 </TouchableOpacity>
                 </View>
                 
@@ -173,12 +173,9 @@ const HomeMecanico = () => {
             borderWidth: 2,
             borderColor: '#F2AA1F',
             margin: 10,
-            
-            
-    
+                
         }
     
     });
 
-
-export default HomeMecanico;
+export default ReadyServices;

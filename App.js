@@ -10,11 +10,13 @@ import Servicios from './Components/ConductorComponent/Servicios';
 import DescriptionService from './Components/ConductorComponent/DescriptionService';
 import FormConductor2 from './Components/ConductorComponent/FormConductor2';
 import FormNuevoVehiculo from './Components/ConductorComponent/FormNuevoVehiculo';
+import HomeMecanico from './Components/MecanicoComponent/HomeMecanico';
+import ReadyServices from './Components/MecanicoComponent/ReadyServices';
 
 export default function App() {
   return (
     
-    <Login/>
+    <HomeMecanico/>
   );
 }
 

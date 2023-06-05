@@ -1,9 +1,38 @@
 import React from 'react';
 import { View, Text, TextInput, Image ,StyleSheet, ImageBackground, TouchableOpacity} from 'react-native';
-import Svg, { Path } from "react-native-svg"
+import Svg, { Path } from "react-native-svg";
+import {useEfect, useState} from 'react';
 
 
 const FormConductor = () => {
+
+    const [nombre, setNombre] = useState("");
+    const [apellido, setApellido] = useState("");
+    const [cedula, setCedula] = useState("");
+    const [telefono, setTelefono] = useState("");
+
+    function formConductor (nombre, apellido, cedula, telefono) {
+        fetch('https://mechanical-assistant-sb-production.up.railway.app/api/conductor', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nombre: nombre,
+                apellido: apellido,
+                cedula: cedula,
+                telefono: telefono,
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+
 
     return (
         <View style={styles.container}>
@@ -11,13 +40,13 @@ const FormConductor = () => {
             <View style={styles.contenedorForm}>
                 <Text style={{textAlign:'center', color:'#276E90', margin: 35, fontSize:25, fontWeight:'bold'}}>Registro</Text>
                 <Text style = {styles.subtitulo2}>Nombre</Text>
-                <TextInput style = {styles.TextInput} placeholder="Ingresar nombre "></TextInput> 
+                <TextInput onChangeText = {(text) => setNombre(text)} style = {styles.TextInput} placeholder="Ingresar nombre "></TextInput> 
                 <Text style = {styles.subtitulo2}>Apellido</Text>
-                <TextInput style = {styles.TextInput} placeholder='Ingresar apellido'></TextInput>
+                <TextInput onChangeText = {(text) => setApellido(text)} style = {styles.TextInput} placeholder='Ingresar apellido'></TextInput>
                 <Text style = {styles.subtitulo2}>Cedula</Text>
-                <TextInput style = {styles.TextInput} placeholder="Ingresar Cedula "></TextInput> 
+                <TextInput onChangeText = {(text) => setCedula(text)} style = {styles.TextInput} placeholder="Ingresar Cedula "></TextInput> 
                 <Text style = {styles.subtitulo2}>Numero de telefono</Text>
-                <TextInput style = {styles.TextInput} placeholder='Ingresar telefono'></TextInput>
+                <TextInput onChangeText = {(text) => setTelefono(text)} style = {styles.TextInput} placeholder='Ingresar telefono'></TextInput>
                 <TouchableOpacity  style={styles.button}>
                     <Text style={{textAlign:'center', color:'#276E90'}}>Siguiente</Text>
                 </TouchableOpacity>

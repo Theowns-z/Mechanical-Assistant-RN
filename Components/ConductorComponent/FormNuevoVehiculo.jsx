@@ -3,9 +3,38 @@ import { View, Text, TextInput, Image ,StyleSheet, ImageBackground, TouchableOpa
 import Svg, { Path } from "react-native-svg"
 import IcomComponents from '../IcomComponents';
 import ProfileConductor from './ProfileConductor';
+import {useEfect, useState} from 'react';
+
 
 
 const FormNuevoVehiculo = () => {
+
+    const [nombreModel, setNombreModel] = useState("");
+    const [placa,setPlaca] = useState("");
+    
+    const formVehiculos = (nombreModel,  placa) => {
+
+        fetch('https://mechanical-assistant-sb-production.up.railway.app/api/vehiculo/conductor/{id}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                modeo: nombreModel,
+                placa: placa,
+                
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+    }
+
 
     return (
         <View style={styles.container}>
@@ -14,14 +43,10 @@ const FormNuevoVehiculo = () => {
             <View style={styles.contenedorForm}>
                 <Text style={{textAlign:'center', color:'#276E90', margin: 35, fontSize:25, fontWeight:'bold'}}>Nuevo vehiculo</Text>
                 <Text style = {styles.subtitulo2}>Nombre del modelo</Text>
-                <TextInput style = {styles.TextInput} placeholder="Ingresar Modelo "></TextInput> 
-                <Text style = {styles.subtitulo2}>Marca</Text>
-                <TextInput style = {styles.TextInput} placeholder='Ingresar la marca'></TextInput>
-                <Text style = {styles.subtitulo2}>Año</Text>
-                <TextInput style = {styles.TextInput} placeholder="Ingresar el año "></TextInput> 
+                <TextInput onChangeText={(text) => setNombreModel(text)}  style = {styles.TextInput} placeholder="Ingresar Modelo "></TextInput>  
                 <Text style = {styles.subtitulo2}>Placa</Text>
-                <TextInput style = {styles.TextInput} placeholder='Ingresar la placa'></TextInput>
-                <TouchableOpacity  style={styles.button}>
+                <TextInput onChangeText={(text) => setPlaca(text)}  style = {styles.TextInput} placeholder="Ingresar la placa"></TextInput>
+                <TouchableOpacity onPress={() => formVehiculos(placa, nombreModel) }  style={styles.button}>
                     <Text style={{textAlign:'center', color:'#276E90'}}>Añadir Vehiculo</Text>
                 </TouchableOpacity>
                 
@@ -75,6 +100,8 @@ const styles = StyleSheet.create({
   
       TextInput: {
           padding: 10,
+
+          
           paddingStart: 20,
           borderWidth: 1,
           backgroundColor: '#276E90',

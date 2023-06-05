@@ -4,11 +4,27 @@ import { ScrollView } from 'react-native';
 import Svg, { Path } from "react-native-svg"
 import StyledText from '../Styles/StyledText';
 import SvgComponent2 from './SvgComponent2';
-
+import { useEffect, useState } from 'react';
 import Mecanicoss from '../Data/Mecanicoss.js';
 
 
 const HomeConductor = () => {
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch('https://mechanical-assistant-sb-production.up.railway.app/api/mecanico', )
+      .then(response => response.json())
+      .then(data => {
+        setData(data);
+        console.log(data);
+
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
+
 
 
     return(
@@ -22,7 +38,7 @@ const HomeConductor = () => {
       
         <FlatList
         style = {styles.contenedorMecanicos}
-        data={Mecanicoss}
+        data={data}
         keyExtractor={meca => meca.id}
         renderItem={({ item }) => (
           <View style = {styles.Boxmecanicos}>
