@@ -1,10 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, Image, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
-import Svg, { Path } from "react-native-svg"
 import SvgComponent from './SvgComponent';
-import { imagen } from '../Images/reparaciones.jpg';
 import DropdownButton from './DropdownButton';
-import SvgComponentHome from './SvgComponents/SvgComponentHome';
 import { MechanicalContext } from '../context/MechanicalContext';
 
 
@@ -12,7 +9,6 @@ const Login = ({ navigation }) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // 'Authorization': `Token token=${user.token}`
 
   const { datos, guardarDatos } = useContext(MechanicalContext);
 
@@ -68,8 +64,6 @@ const Login = ({ navigation }) => {
       <Text style={styles.subtitulo2}>Contraseña</Text>
       <TextInput onChangeText={(text) => setPassword(text)} style={styles.TextInput} placeholder='Ingresar Contraseña'></TextInput>
       <Text style={{ textAlign: 'center', margin: 10, color: '#276E90' }}>¿Olvidaste tu contraseña?</Text>
-      <Text style={{ textAlign: 'center', margin: 10, color: '#276E90' }}>Seleccione un Rol</Text>
-      <DropdownButton />
 
       <TouchableOpacity
         onPress={() => Login(email, password)}

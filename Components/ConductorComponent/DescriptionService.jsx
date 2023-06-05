@@ -1,35 +1,74 @@
-import React from 'react';
-import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity, FlatList, Alert } from 'react-native';
 import IcomComponents from '../IcomComponents';
+import { MechanicalContext } from '../../context/MechanicalContext';
 
 
-
-const DescriptionService = () => {
+const DescriptionService = ({ navigation, route }) => {
+    const { item } = route.params;
 
     const [descripcion, setDescripcion] = useState("");
 
-    function formSolicitud(descripcion) {
+    const fechaActual = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const fechaFormateada = fechaActual.toLocaleDateString('es-ES', options)
+    const { datos } = useContext(MechanicalContext);
 
-        fetch('https://mechanical-assistant-sb-production.up.railway.app/api/vehiculo/conductor/{id}', {
+
+    const showAlert = (data) => {
+        Alert.alert(
+            data.message,
+            (typeof data.response === 'string') ? data.response : "Servicio enviado",
+            [
+                {
+                    text: 'Aceptar',
+                    onPress: () => navigation.navigate('HomeConductor'),
+                    style: 'default',
+                },
+                {
+                    text: 'Cancelar',
+                    onPress: () => console.log('Cancelar presionado'),
+                    style: 'cancel',
+                },
+            ],
+            { cancelable: false }
+        );
+
+    };
+
+
+    function enviarService() {
+        const url = "https://mechanical-assistant-sb-production.up.railway.app/api/servicio";
+
+        const body = {
+            "conductor": {
+                "id": datos.id
+            },
+            "mecanico": {
+                "id": 1000
+            },
+            "vehiculo": {
+                "id": item.id
+            },
+            "descripcion": descripcion,
+            "fecha": fechaFormateada
+        }
+
+
+        console.log(body)
+        const requestOptions = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${datos.token}`
             },
-            body: JSON.stringify({
-                modeo: nombreModel,
-                placa: placa,
+            body: JSON.stringify(body)
+        };
 
-            })
-        })
+        fetch(url, requestOptions)
             .then(response => response.json())
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-
-
+            .then(data => showAlert(data))
+            .catch(error => console.log('Error:', error));
     }
 
     return (
@@ -41,7 +80,7 @@ const DescriptionService = () => {
                 <TextInput onChangeText={(text) => setDescripcion(text)} multiline={true}
                     textAlignVertical="top" style={styles.TextInput} placeholder="Describe tu solicitud"></TextInput>
 
-                <TouchableOpacity onPress={() => formSolicitud(descripcion)} style={styles.button}>
+                <TouchableOpacity onPress={() => enviarService()} style={styles.button}>
                     <Text style={{ textAlign: 'center', color: '#276E90' }}>Realizar solicitud</Text>
                 </TouchableOpacity>
 

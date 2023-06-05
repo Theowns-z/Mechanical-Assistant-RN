@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { ScrollView } from 'react-native';
 import Svg, { Path } from "react-native-svg"
@@ -6,23 +6,35 @@ import StyledText from '../Styles/StyledText';
 import SvgComponent2 from './SvgComponent2';
 import { useEffect, useState } from 'react';
 import Mecanicoss from '../Data/Mecanicoss.js';
+import { MechanicalContext } from '../../context/MechanicalContext';
 
 
 const HomeConductor = ({ navigation }) => {
-
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    fetch('https://mechanical-assistant-sb-production.up.railway.app/api/mecanico', )
-      .then(response => response.json())
-      .then(data => {
-        setData(data);
-        console.log(data);
+  const { datos } = useContext(MechanicalContext);
 
-      })
-      .catch(error => {
-        console.error(error);
-      });
+  function traerMecanicos() {
+    const url = 'https://mechanical-assistant-sb-production.up.railway.app/api/mecanico';
+
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${datos.token}`
+      },
+      redirect: 'follow'
+    };
+
+    fetch(url, requestOptions)
+      .then(response => response.json())
+      .then(data => setData(data))
+      .catch(error => console.log('Error:', error));
+  }
+
+
+  useEffect(() => {
+    traerMecanicos();
   }, []);
 
 
@@ -34,9 +46,9 @@ const HomeConductor = ({ navigation }) => {
       <StyledText subtitle>
         Mecanicos
       </StyledText>
-              
-        <FlatList
-        style = {styles.contenedorMecanicos}
+
+      <FlatList
+        style={styles.contenedorMecanicos}
         data={data}
         keyExtractor={meca => meca.id}
         renderItem={({ item }) => (

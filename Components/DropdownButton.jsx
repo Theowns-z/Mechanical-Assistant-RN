@@ -1,26 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Picker } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
 const DropdownButton = ({ role, setRole }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const MecanicoDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const ConductorDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
 
   return (
     <View styles={styles.contenedorbutton}>
-      <TouchableOpacity onPress={toggleDropdown} style={styles.button}>
-        <Text style={styles.buttonText}>Rol</Text>
-      </TouchableOpacity>
       <View >
         <Picker
           selectedValue={role}
@@ -29,7 +14,6 @@ const DropdownButton = ({ role, setRole }) => {
           <Picker.Item label="Mecanico" value="MECANICO" />
           <Picker.Item label="Conductor" value="CONDUCTOR" />
         </Picker>
-
 
       </View>
     </View>
