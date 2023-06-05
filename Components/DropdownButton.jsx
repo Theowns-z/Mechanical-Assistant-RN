@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Picker } from 'react-native';
 
-const DropdownButton = () => {
+const DropdownButton = ({ role, setRole }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState('option1');
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -22,19 +21,17 @@ const DropdownButton = () => {
       <TouchableOpacity onPress={toggleDropdown} style={styles.button}>
         <Text style={styles.buttonText}>Rol</Text>
       </TouchableOpacity>
-      {isDropdownOpen && (
-        <View >
-          <Picker
-            selectedValue={selectedValue}
-            onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-          >
-            <Picker.Item label="Mecanico" value="MECANICO" />
-            <Picker.Item label="Conductor" value="CONDUCTOR" />
-          </Picker>
+      <View >
+        <Picker
+          selectedValue={role}
+          onValueChange={(itemValue, itemIndex) => setRole(itemValue)}
+        >
+          <Picker.Item label="Mecanico" value="MECANICO" />
+          <Picker.Item label="Conductor" value="CONDUCTOR" />
+        </Picker>
 
 
-        </View>
-      )}
+      </View>
     </View>
   );
 };

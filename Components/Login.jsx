@@ -16,29 +16,43 @@ const Login = ({ navigation }) => {
 
   const { datos, guardarDatos } = useContext(MechanicalContext);
 
-  console.log(datos)
+  const onClick = (datos) => {
+
+    guardarDatos(datos);
+    console.log(datos)
+    if (datos.role === 'MECANICO') {
+      navigation.navigate('HomeMecanico')
+
+    } else if (datos.role === 'CONDUCTOR') {
+      navigation.navigate('HomeConductor')
+    }
+
+
+  }
 
   function Login(email, password) {
     const url = 'https://mechanical-assistant-sb-production.up.railway.app/api/auth/login';
 
     const data = {
-      email: "luisito10@gmail.com",
-      password: "luis2",
+      email: email,
+      password: password,
     };
 
     const requestOptions = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `${datos.token}`
       },
       body: JSON.stringify(data)
     };
 
     fetch(url, requestOptions)
       .then(response => response.json())
-      .then(data => guardarDatos(data.response))
+      .then(data => onClick(data.response))
       .catch(error => console.log('Error:', error));
   }
+
 
 
   return (
@@ -63,7 +77,7 @@ const Login = ({ navigation }) => {
         <Text style={styles.buttonText2}>Ingresar</Text>
 
       </TouchableOpacity>
-      <Text style={{ textAlign: 'center', margin: 10, color: '#276E90' }}>Registrate Aqui</Text>
+      <Text onPress={() => { navigation.navigate('Registrar') }} style={{ textAlign: 'center', margin: 10, color: '#276E90' }}>Registrate Aqui</Text>
 
 
     </View>
